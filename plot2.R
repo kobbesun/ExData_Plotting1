@@ -11,9 +11,9 @@ dt_uci_date <- fread("../household_power_consumption.txt", sep="auto", nrows=-1,
                      header=TRUE, na.strings="?", select=1)
 dt_uci_date[, index:=.I]
 row_skip <- dt_uci_date[dt_uci_date$Date=="1/2/2007" | 
-                        dt_uci_date$Date=="2/2/2007", ][[2]][[1]]
+                                dt_uci_date$Date=="2/2/2007", ][[2]][[1]]
 count_rows <- dt_uci_date[dt_uci_date$Date=="1/2/2007" | 
-                          dt_uci_date$Date=="2/2/2007", .N] 
+                                  dt_uci_date$Date=="2/2/2007", .N] 
 
 # obtain target records
 dt_uci_target <- fread("../household_power_consumption.txt", sep="auto",
@@ -23,11 +23,13 @@ dt_uci_target <- fread("../household_power_consumption.txt", sep="auto",
 # assign column names
 setnames(dt_uci_target, names(dt_uci_5rows))
 
+# combine Date and Time to datetime in type POSIXct 
+dt_uci_target[, datetime := as.POSIXct(paste(Date, Time, sep = " "),
+                                     format = "%d/%m/%Y %H:%M:%S")]
+
 # import dataset package
 library(dataset)
 
-# Plot 1
-hist(dt_uci_target$Global_active_power, 
-     freq = TRUE, col="red", 
-     main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
-
+# plot 2
+with(dt_uci_target, plot(datetime, Global_active_power, type = "l",
+                         xlab = "", ylab = "Global Active Power (kilowatts)"))
