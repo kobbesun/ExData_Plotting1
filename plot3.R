@@ -24,11 +24,16 @@ setnames(dt_uci_target, names(dt_uci_5rows))
 
 # combine Date and Time to datetime in type POSIXct 
 dt_uci_target[, datetime := as.POSIXct(paste(Date, Time, sep = " "),
-                                     format = "%d/%m/%Y %H:%M:%S")]
+                                       format = "%d/%m/%Y %H:%M:%S")]
 
-# import dataset package
-#library(dataset)
+# plot 3
+with(dt_uci_target, {
+        plot(datetime, Sub_metering_1, type = "l", xlab = "", 
+             ylab = "Engergy sub metering")
+        lines(datetime, Sub_metering_2, type = "l", xlab = "", col = "red")
+        lines(datetime, Sub_metering_3, type = "l", xlab = "", col = "blue")
+})
+legend("topright", lwd = 1.5, pch = "_", col = c("black","red","blue"), 
+       legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
-# plot 2
-with(dt_uci_target, plot(datetime, Global_active_power, type = "l",
-                         xlab = "", ylab = "Global Active Power (kilowatts)"))
+

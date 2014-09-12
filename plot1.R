@@ -10,10 +10,9 @@ print(dt_uci_5rows)
 dt_uci_date <- fread("../household_power_consumption.txt", sep="auto", nrows=-1, 
                      header=TRUE, na.strings="?", select=1)
 dt_uci_date[, index:=.I]
-row_skip <- dt_uci_date[dt_uci_date$Date=="1/2/2007" | 
-                        dt_uci_date$Date=="2/2/2007", ][[2]][[1]]
-count_rows <- dt_uci_date[dt_uci_date$Date=="1/2/2007" | 
-                          dt_uci_date$Date=="2/2/2007", .N] 
+setkey(dt_uci_date, Date)
+row_skip <- dt_uci_date[c("1/2/2007", "2/2/2007"),]$index[1]
+count_rows <- nrow(dt_uci_date[c("1/2/2007", "2/2/2007"),])
 
 # obtain target records
 dt_uci_target <- fread("../household_power_consumption.txt", sep="auto",
@@ -24,7 +23,7 @@ dt_uci_target <- fread("../household_power_consumption.txt", sep="auto",
 setnames(dt_uci_target, names(dt_uci_5rows))
 
 # import dataset package
-library(dataset)
+#library(dataset)
 
 # Plot 1
 hist(dt_uci_target$Global_active_power, 
