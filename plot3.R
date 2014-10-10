@@ -26,6 +26,9 @@ setnames(dt_uci_target, names(dt_uci_5rows))
 dt_uci_target[, datetime := as.POSIXct(paste(Date, Time, sep = " "),
                                        format = "%d/%m/%Y %H:%M:%S")]
 
+# output as png
+png("figure/plot3.png")
+
 # plot 3
 with(dt_uci_target, {
         plot(datetime, Sub_metering_1, type = "l", xlab = "", 
@@ -36,4 +39,6 @@ with(dt_uci_target, {
 legend("topright", lwd = 1.5, pch = "_", col = c("black","red","blue"), 
        legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
+# turn off device
+dev.off()
 

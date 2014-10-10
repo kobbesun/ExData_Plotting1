@@ -25,8 +25,13 @@ setnames(dt_uci_target, names(dt_uci_5rows))
 # import dataset package
 #library(dataset)
 
+# output as png
+png("figure/plot1.png")
+
 # Plot 1
 hist(dt_uci_target$Global_active_power, 
      freq = TRUE, col="red", 
      main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
 
+# turn off device
+dev.off()

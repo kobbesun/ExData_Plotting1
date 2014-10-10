@@ -29,6 +29,12 @@ dt_uci_target[, datetime := as.POSIXct(paste(Date, Time, sep = " "),
 # import dataset package
 #library(dataset)
 
+# output as png
+png("figure/plot2.png")
+
 # plot 2
 with(dt_uci_target, plot(datetime, Global_active_power, type = "l",
                          xlab = "", ylab = "Global Active Power (kilowatts)"))
+
+# turn off device
+dev.off()

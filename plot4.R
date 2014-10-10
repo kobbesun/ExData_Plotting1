@@ -26,6 +26,9 @@ setnames(dt_uci_target, names(dt_uci_5rows))
 dt_uci_target[, datetime := as.POSIXct(paste(Date, Time, sep = " "),
                                        format = "%d/%m/%Y %H:%M:%S")]
 
+# output as png
+png("figure/plot4.png")
+
 # plot 4
 par(mfrow = c(2, 2))
 with(dt_uci_target, {
@@ -47,3 +50,5 @@ with(dt_uci_target, {
              xlab = "", ylab = "Global_reactive_power")
 })
 
+# turn off device
+dev.off()
